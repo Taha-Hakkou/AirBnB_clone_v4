@@ -160,5 +160,11 @@ Jhoan Zamora - [Github](https://github.com/jzamora5) / [Twitter](https://twitter
 David Ovalle - [Github](https://github.com/Nukemenonai) / [Twitter](https://twitter.com/disartDave)
 
 Second part of Airbnb: Joann Vuong
+
+* AirBnB_clone_v4
+-----------------
+
+Taha Hakkou - [Github](https://github.com/Taha-Hakkou)
+
 ## License
 Public Domain. No copy write protection. 
