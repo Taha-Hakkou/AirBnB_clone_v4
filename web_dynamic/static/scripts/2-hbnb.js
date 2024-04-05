@@ -1,4 +1,4 @@
-// 1-hbnb.js
+// 2-hbnb.js
 
 $('document').ready(function () {
   $('input').change(function () {
@@ -25,3 +25,8 @@ $('document').ready(function () {
     $('.amenities > h4').text(amenitiesText);
   });
 });
+
+fetch('http://0.0.0.0:5001/api/v1/status/')
+  .then(response => {
+    if (response.ok) { $('div#api_status').addClass('available'); } else { $('div#api_status').removeClass('available'); }
+  });
