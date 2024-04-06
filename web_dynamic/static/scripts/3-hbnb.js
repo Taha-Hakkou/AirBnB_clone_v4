@@ -1,4 +1,18 @@
 // 2-hbnb.js
+function getUserInfo(id, theClass) {
+  // Return the promise chain created by fetch
+  return fetch('http://0.0.0.0:5001/api/v1/users/' + id)
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+        $(theClass).text(` ${data.first_name} ${data.last_name}`);
+      })
+      .catch(error => {
+          console.error('Fetch error:', error);
+      });
+}
+
 
 $('document').ready(function () {
   $('input').change(function () {
@@ -39,22 +53,22 @@ $(document).ready(function () {
     data: JSON.stringify({}),
     success: function (response) {
       for (const place of response) {
-        if (place.description === null)
-          place.description = "No description provided.";
-
-        const article = 
+        if (place.description === null) { place.description = 'No description provided.'; }
+        
+        const article =
         `<article>
           <div class="title_box">
             <h2>${place.name}</h2>
-            <div class="price_by_night">${place.price_by_night}</div>
+            <div class="price_by_night">${place.price_by_night}$</div>
           </div>
           <div class="information">
-            <div class="max_guest">${ place.max_guest} Guest</div>
-            <div class="number_rooms">${ place.number_rooms} Bedroom</div>
+            <div class="max_guest">${place.max_guest} Guest</div>
+            <div class="number_rooms">${place.number_rooms} Bedroom</div>
             <div class="number_bathrooms">${place.number_bathrooms} Bathroom</div>
           </div>
           <div class="user">
-            <b>Owner:</b> first_name last_name<br>
+          <b>Owner:</b><span class="${place.user_id}"></span>
+          <br>
           </div>
           <div class="description">
             ${place.description}
@@ -62,7 +76,9 @@ $(document).ready(function () {
         </article>`;
         
         $('section.places').append(article);
+        getUserInfo(place.user_id, `.${place.user_id}`);
       }
+      
     },
     error: function (xhr, status, error) {
       // Handle error response
