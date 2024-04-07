@@ -13,7 +13,6 @@ function getUserInfo(id, theClass) {
       });
 }
 
-
 $('document').ready(function () {
   $('input').change(function () {
     const amenities = {};
