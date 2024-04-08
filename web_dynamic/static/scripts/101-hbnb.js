@@ -1,18 +1,30 @@
 // 101-hbnb.js
-function getUserInfo(user_id) {
+function getUserInfo(id, theClass) {
   // Return the promise chain created by fetch
-  $.ajax({
-    url: 'http://0.0.0.0:5001/api/v1/users/' + user_id,
-    success: function (data) {
-	console.log( ` ${data.first_name} ${data.last_name}`);
-	      
-        //$(theClass).text(` ${data.first_name} ${data.last_name}`);
-    },
-    error: () => {
+  return fetch('http://0.0.0.0:5001/api/v1/users/' + id)
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+        $(theClass).text(` ${data.first_name} ${data.last_name}`);
+      })
+      .catch(error => {
           console.error('Fetch error:', error);
-    }
-  });
+      });
 }
+function getUserInfo2(id, theClass) {
+  return fetch('http://0.0.0.0:5001/api/v1/users/' + id)
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+        $(theClass).text(`From ${data.first_name} ${data.last_name}`);
+      })
+      .catch(error => {
+          console.error('Fetch error:', error);
+      });
+}
+
 
 /* ----task7---- */
 function showReviews(place_id) {
@@ -26,10 +38,11 @@ function showReviews(place_id) {
 	for (const review of response) {
 	  const review_item =
 	  `<li>
-	  	<h3>From ${getUserInfo(review.user_id)}</h3>
+	  	<h3 class="review-${review.user_id}"></h3>
 	  	<p>${review.text}</p>
 	  </li>`;
           ul.append(review_item);
+          getUserInfo2(review.user_id, `.review-${review.user_id}`);
 	}
       }
     });
@@ -99,7 +112,7 @@ $('document').ready(function () {
               <div class="number_bathrooms">${place.number_bathrooms} Bathroom</div>
             </div>
             <div class="user">
-              <b>Owner:</b> <span>${getUserInfo(place.user_id)}</span><br>
+              <b>Owner:</b><span class="${place.user_id}"></span><br>
             </div>
             <div class="description">
               ${place.description}
@@ -113,7 +126,7 @@ $('document').ready(function () {
           </article>`;
         
           $('section.places').append(article);
-          //getUserInfo(place.user_id, `.${place.user_id}`);
+          getUserInfo(place.user_id, `.${place.user_id}`);
         }
 
 	/* ----task7---- */
